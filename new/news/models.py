@@ -20,9 +20,9 @@ class News(models.Model):
     content = models.TextField(blank=True, verbose_name='Контент')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата публікації')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата оновлення')
-    photo = models.ImageField(upload_to='photos/%Y/%m/%d/', verbose_name='Фото', blank=True)
+    photo = models.ImageField(upload_to='photos/%Y/%m/%d/%H/%M/%S', verbose_name='Фото', blank=True)
     is_published = models.BooleanField(default=True, verbose_name='Опубліковано ?')
-    categores = models.ManyToManyField(Category)
+    categores = models.ManyToManyField(Category, blank=True)
 
     def __str__(self):
         return self.title

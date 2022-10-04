@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Category(models.Model):
+    objects = None
     title = models.CharField(max_length=150, db_index=True, verbose_name='Назва кетегорії')
 
     def __str__(self):

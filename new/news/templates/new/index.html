@@ -11,9 +11,16 @@
         <p>{{ item.content }} </p>
         <a class="" href="">Детальніше</a>
 
+        <div class="media">
+            {% if item.photo %}
+         <img src="{{ item.photo.url }}" alt="" width="100">
+            {% endif %}
+        </div>
+
         {% for i in item.categores.all %}
         <p>{{ i }} </p>
         {% endfor %}
+        <br>
         <hr>
     </div>
 {% endfor %}

@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
 from .models import News
 
 
@@ -24,3 +23,20 @@ def show_post(request, post_id):
 
 def about(request):
     return render(request, 'new/about.html')
+
+
+def register(request):
+    return render(request, 'new/register.html')
+
+
+def login(request):
+    return render(request, 'new/login.html')
+
+
+
+
+
+
+
+
+

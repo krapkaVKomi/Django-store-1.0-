@@ -22,6 +22,9 @@ class News(models.Model):
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата оновлення')
     photo = models.ImageField(upload_to='photos/%Y/%m/%d/%H/%M/%S', verbose_name='Фото', blank=True)
     is_published = models.BooleanField(default=True, verbose_name='Опубліковано ?')
+    cost = models.FloatField(null=True, verbose_name='Ціна', blank=True)
+    we_have = models.BooleanField(default=False, verbose_name='Є в наявності?', blank=True)
+    rating = models.FloatField(null=True, verbose_name='Рейтинг', blank=True)
     categores = models.ManyToManyField(Category, blank=True)
 
     def __str__(self):

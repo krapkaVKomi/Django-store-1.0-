@@ -9,7 +9,13 @@
     <div>
         <h4>{{ item.title }} </h4>
         <p>{{ item.content }} </p>
+        <p>{{ item.cost }} гривень </p>
+
         <!--  -->
+            {% if item.rating %}
+                <p>{{ item.rating }}/5 рейтинг </p>
+            {% endif %}
+
     <a class="" href="{% url 'post' item.id %}">Детальніше</a>
 
         <div class="media">
@@ -19,7 +25,7 @@
         </div>
 
         {% for i in item.categores.all %}
-        <p>{{ i }} </p>
+        <p style="color: gray">#{{ i }} </p>
         {% endfor %}
         <br>
         <hr>

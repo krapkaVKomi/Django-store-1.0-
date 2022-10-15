@@ -13,7 +13,11 @@ def index(request):
 
     print({'news': news})
     return render(request, 'new/index.html', {'news': news})
-                                            # id, title, content, category
+
+
+# detail_view
+def show_post(request, post_id):
+    return HttpResponse(f"Відображення інформації за id {post_id}")
 
 
 def about(request):

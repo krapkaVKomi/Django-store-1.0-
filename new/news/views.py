@@ -17,7 +17,9 @@ def index(request):
 
 # detail_view
 def show_post(request, post_id):
-    return HttpResponse(f"Відображення інформації за id {post_id}")
+    news = News.objects.filter(id=post_id)
+    # return HttpResponse(f"Відображення інформації за id {post_id}")
+    return render(request, 'new/detail_view.html', {'news': news})
 
 
 def about(request):

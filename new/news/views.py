@@ -1,6 +1,23 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import News
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib import messages
+
+
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            print('ВСЕ УСПІШНО ЗБЕРЕЖЕНО')
+            messages.success(request, 'Реєстрація успішна')
+            return redirect('login')
+        else:
+            messages.error(request, 'Помилка реєстрації')
+    else:
+        form = UserCreationForm()
+    return render(request, 'new/register.html', {"form": form})
 
 
 def index(request):
@@ -8,7 +25,7 @@ def index(request):
     category = News.objects.all()
     for i in category:
         print_str = str(i) + 'Властивості' + str(i.categores.all())
-        print(print_str)
+
 
     print({'news': news})
     return render(request, 'new/index.html', {'news': news})
@@ -23,10 +40,6 @@ def show_post(request, post_id):
 
 def about(request):
     return render(request, 'new/about.html')
-
-
-def register(request):
-    return render(request, 'new/register.html')
 
 
 def login(request):

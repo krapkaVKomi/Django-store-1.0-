@@ -1,9 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
-from .models import News
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .forms import UserLoginForm
+from .models import News
 
 
 def register(request):
@@ -37,6 +37,7 @@ def user_logout(request):
     logout(request)
     return redirect('/')
 
+
 def index(request):
     news = News.objects.order_by('-created_at')
     return render(request, 'new/index.html', {'news': news})
@@ -45,7 +46,6 @@ def index(request):
 # detail_view
 def show_post(request, post_id):
     news = News.objects.filter(id=post_id)
-    # return HttpResponse(f"Відображення інформації за id {post_id}")
     return render(request, 'new/detail_view.html', {'news': news})
 
 

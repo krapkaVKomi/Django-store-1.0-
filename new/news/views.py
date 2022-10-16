@@ -1,18 +1,19 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.contrib.auth import login, logout
 from .models import News
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from .forms import UserLoginForm
 
 
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            print('ВСЕ УСПІШНО ЗБЕРЕЖЕНО')
+            user = form.save()
+            login(request, user)
             messages.success(request, 'Реєстрація успішна')
-            return redirect('login')
+            return redirect('/')
         else:
             messages.error(request, 'Помилка реєстрації')
     else:
@@ -20,14 +21,24 @@ def register(request):
     return render(request, 'new/register.html', {"form": form})
 
 
+def user_login(request):
+    if request.method == 'POST':
+        form = UserLoginForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('/')
+    else:
+        form = UserLoginForm()
+    return render(request, 'new/login.html', {"form": form})
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('/')
+
 def index(request):
     news = News.objects.order_by('-created_at')
-    category = News.objects.all()
-    for i in category:
-        print_str = str(i) + 'Властивості' + str(i.categores.all())
-
-
-    print({'news': news})
     return render(request, 'new/index.html', {'news': news})
 
 
@@ -42,8 +53,7 @@ def about(request):
     return render(request, 'new/about.html')
 
 
-def login(request):
-    return render(request, 'new/login.html')
+
 
 
 

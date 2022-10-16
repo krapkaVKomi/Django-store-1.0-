@@ -6,10 +6,10 @@ REGISTER
 
 {% block content %}
    <h1>REGISTER</h1>
-<form method="post">
+
+<form method="post" style="">
     {% csrf_token %}
     {{ form.as_p }}
-
     <br>
     <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
 </form>

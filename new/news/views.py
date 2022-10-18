@@ -8,12 +8,12 @@ from django.core.paginator import Paginator
 
 
 # test
-def test(request):
+def store(request):
     objects = News.objects.order_by('-created_at')
     paginator = Paginator(objects, 3)
     page_nam = request.GET.get('page', 1)
     page_objects = paginator.get_page(page_nam)
-    return render(request, 'new/test.html', {'page_obj': page_objects})
+    return render(request, 'new/store.html', {'page_obj': page_objects})
 
 
 def register(request):

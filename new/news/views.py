@@ -5,6 +5,7 @@ from django.contrib import messages
 from .forms import UserLoginForm
 from .models import News
 from django.core.paginator import Paginator
+from django.http import HttpResponse
 
 
 # test
@@ -62,6 +63,14 @@ def show_post(request, post_id):
 def about(request):
     return render(request, 'new/about.html')
 
+
+def search(request, find):
+    print(find)
+    try:
+        news = News.objects.filter(title=find)
+        return render(request, 'new/search.html', {'news': news})
+    except:
+        return HttpResponse("<h1>НЕ здавайся</h1>")
 
 
 

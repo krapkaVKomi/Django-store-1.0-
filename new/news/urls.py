@@ -1,7 +1,7 @@
 from django.urls import path
-
 from .views import *
 # urls
+
 urlpatterns = [
     path('', store, name='store'),
     path('about/', about),
@@ -9,4 +9,5 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('login/', user_login, name='login'),
     path('logout/', user_logout, name='logout'),
+    path("search/<str:find>/", search, name='search')
 ]

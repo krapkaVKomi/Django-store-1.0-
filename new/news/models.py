@@ -14,6 +14,20 @@ class Category(models.Model):
         ordering = ['title']
 
 
+class SuperCategory(models.Model):
+    objects = None
+    title = models.CharField(max_length=150, db_index=True, verbose_name='Назва кетегорії')
+    categores = models.ManyToManyField(Category, blank=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Супер категорія'
+        verbose_name_plural = 'Супер категорії'
+        ordering = ['title']
+
+
 class News(models.Model):
     objects = None
     title = models.CharField(max_length=150, verbose_name='Назва новини')
@@ -31,8 +45,8 @@ class News(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = 'Новина'
-        verbose_name_plural = 'Новини'
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товари'
         ordering = ['-created_at', 'title']
 
 

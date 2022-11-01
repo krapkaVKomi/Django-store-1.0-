@@ -12,10 +12,30 @@ find all
     </div>
 </form>
 
-{% for post in posts %}
+{% for item in posts %}
 
-    <h3 class="title">{{ post.title }}</h3>
-    <p>{{ post.content }}</p><hr>
+     <h4>{{ item.title }} </h4>
+        <p>{{ item.content }} </p>
+        <p>{{ item.cost }} грн </p>
+
+        <!--  -->
+            {% if item.rating %}
+                <p>{{ item.rating }}/5 рейтинг </p>
+            {% endif %}
+
+    <a class="" href="{% url 'post' item.id %}">Детальніше</a>
+
+        <div class="media">
+            {% if item.photo %}
+         <img src="{{ item.photo.url }}" alt="" width="100">
+            {% endif %}
+        </div>
+
+        {% for i in item.categores.all %}
+        <p style="color: gray">#{{ i }} </p>
+        {% endfor %}
+        <br>
+        <hr>
 {% endfor %}
 
 {% if posts.has_other_pages %}

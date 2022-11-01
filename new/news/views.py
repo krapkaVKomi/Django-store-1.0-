@@ -8,15 +8,6 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 
 
-# test
-def store(request):
-    objects = News.objects.order_by('-created_at')
-    paginator = Paginator(objects, 3)
-    page_nam = request.GET.get('page', 1)
-    page_objects = paginator.get_page(page_nam)
-    return render(request, 'new/store.html', {'page_obj': page_objects})
-
-
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -49,11 +40,6 @@ def user_logout(request):
     return redirect('/')
 
 
-def index(request):
-    news = News.objects.order_by('-created_at')
-    return render(request, 'new/index.html', {'news': news})
-
-
 # detail_view
 def show_post(request, post_id):
     news = News.objects.filter(id=post_id)
@@ -71,7 +57,7 @@ def post_list(request):
         posts_list = News.objects.filter(
             Q(title__icontains=query) | Q(content__icontains=query)
         ).distinct()
-    paginator = Paginator(posts_list, 6) # 6 posts per page
+    paginator = Paginator(posts_list, 2) # 6 posts per page
     page = request.GET.get('page')
 
     try:

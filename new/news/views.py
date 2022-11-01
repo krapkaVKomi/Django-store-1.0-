@@ -4,8 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .forms import UserLoginForm
 from .models import News
-from django.core.paginator import Paginator
-from django.http import HttpResponse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.db.models import Q
 
 
 # test
@@ -64,19 +64,27 @@ def about(request):
     return render(request, 'new/about.html')
 
 
-def search(request, find):
-    print(find)
+def post_list(request):
+    posts_list = News.objects.all()
+    query = request.GET.get('q')
+    if query:
+        posts_list = News.objects.filter(
+            Q(title__icontains=query) | Q(content__icontains=query)
+        ).distinct()
+    paginator = Paginator(posts_list, 6) # 6 posts per page
+    page = request.GET.get('page')
+
     try:
-        news = News.objects.filter(title=find)
-        return render(request, 'new/search.html', {'news': news})
-    except:
-        return HttpResponse("<h1>НЕ здавайся</h1>")
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
 
-
-
-
-
-
+    context = {
+        'posts': posts
+    }
+    return render(request, "new/post-list.html", context)
 
 
 

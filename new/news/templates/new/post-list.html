@@ -7,7 +7,7 @@ find all
 {% for item in list_category %}
     <h4>{{ item.title }} </h4>
     {% for i in item.categores.all %}
-    <li>{{ i }}</li>
+    <li><a class="" href="{% url 'show_category' i %}">{{ i }}</a></li>
     {% endfor %}
 {% endfor %}
 <br>
@@ -27,8 +27,6 @@ find all
             {% if item.rating %}
                 <p>{{ item.rating }}/5 рейтинг </p>
             {% endif %}
-
-    <a class="" href="{% url 'post' item.id %}">Детальніше</a>
 
         <div class="media">
             {% if item.photo %}

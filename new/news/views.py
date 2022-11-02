@@ -51,8 +51,9 @@ def about(request):
 
 
 def post_list(request):
-    list_category = SuperCategory.objects.all()
+    list_category = SuperCategory.objects.all() #categores
     posts_list = News.objects.filter(is_published=True)
+
     query = request.GET.get('q')
     if query:
         posts_list = News.objects.filter(
@@ -76,12 +77,31 @@ def post_list(request):
     return render(request, "new/post-list.html", context)
 
 
-def show_category(request):
+def show_category(request, category):
     list_category = SuperCategory.objects.all()
-    category = {'list_category': list_category}
-    for i in list_category:
-        print(i)
-    return render(request, "new/base.html", category)
+    posts_list = Category.objects.get(title=category).news_set.filter(is_published=True)
+    query = request.GET.get('q')
+    if query:
+        posts_list = News.objects.filter(
+            Q(title__icontains=query) | Q(content__icontains=query) | Q(tags__icontains=query)
+        ).distinct()
+
+    paginator = Paginator(posts_list, 2)  # 2 posts per page
+    page = request.GET.get('page')
+
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
+    context = {
+        'posts': posts,
+        'list_category': list_category
+    }
+    return render(request, "new/detail_view.html", context)
+
 
 
 

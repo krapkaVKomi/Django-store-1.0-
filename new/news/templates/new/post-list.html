@@ -4,14 +4,20 @@ find all
 {% endblock %}
 
 {% block content %}
-
+{% for item in list_category %}
+    <h4>{{ item.title }} </h4>
+    {% for i in item.categores.all %}
+    <li>{{ i }}</li>
+    {% endfor %}
+{% endfor %}
+<br>
 <form method="GET" >
     <div class="input-field">
         <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search Here...">
        <button class="btn" type="submit" name="action">Search</button>
     </div>
 </form>
-
+<hr>
 {% for item in posts %}
 
      <h4>{{ item.title }} </h4>

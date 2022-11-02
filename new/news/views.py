@@ -3,7 +3,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .forms import UserLoginForm
-from .models import News
+from .models import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Q
 
@@ -51,13 +51,14 @@ def about(request):
 
 
 def post_list(request):
+    list_category = SuperCategory.objects.all()
     posts_list = News.objects.all()
     query = request.GET.get('q')
     if query:
         posts_list = News.objects.filter(
             Q(title__icontains=query) | Q(content__icontains=query)
         ).distinct()
-    paginator = Paginator(posts_list, 2) # 6 posts per page
+    paginator = Paginator(posts_list, 2)  # 2 posts per page
     page = request.GET.get('page')
 
     try:
@@ -68,11 +69,18 @@ def post_list(request):
         posts = paginator.page(paginator.num_pages)
 
     context = {
-        'posts': posts
+        'posts': posts,
+        'list_category': list_category
     }
     return render(request, "new/post-list.html", context)
 
 
+def show_category(request):
+    list_category = SuperCategory.objects.all()
+    category = {'list_category': list_category}
+    for i in list_category:
+        print(i)
+    return render(request, "new/base.html", category)
 
 
 

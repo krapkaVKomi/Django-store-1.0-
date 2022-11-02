@@ -52,12 +52,13 @@ def about(request):
 
 def post_list(request):
     list_category = SuperCategory.objects.all()
-    posts_list = News.objects.all()
+    posts_list = News.objects.filter(is_published=True)
     query = request.GET.get('q')
     if query:
         posts_list = News.objects.filter(
-            Q(title__icontains=query) | Q(content__icontains=query)
+            Q(title__icontains=query) | Q(content__icontains=query) | Q(tags__icontains=query)
         ).distinct()
+
     paginator = Paginator(posts_list, 2)  # 2 posts per page
     page = request.GET.get('page')
 

@@ -19,7 +19,6 @@ find all
 </form>
 <hr>
 {% for item in posts %}
-
      <h4>{{ item.title }} </h4>
         <p>{{ item.content }} </p>
         <p>{{ item.cost }} грн </p>
@@ -39,7 +38,8 @@ find all
 
         {% for i in item.categores.all %}
         <p style="color: gray">#{{ i }} </p>
-        {% endfor %}
+
+{% endfor %}
         <br>
         <hr>
 {% endfor %}

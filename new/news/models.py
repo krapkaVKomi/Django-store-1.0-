@@ -30,8 +30,8 @@ class SuperCategory(models.Model):
 
 class News(models.Model):
     objects = None
-    title = models.CharField(max_length=150, verbose_name='Назва новини')
-    content = models.TextField(blank=True, verbose_name='Контент')
+    title = models.CharField(max_length=150, verbose_name='Назва товару')
+    content = models.TextField(blank=True, verbose_name='Опис')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата публікації')
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата оновлення')
     photo = models.ImageField(upload_to='photos/%Y/%m/%d/%H/%M/%S', verbose_name='Фото', blank=True)
@@ -40,6 +40,7 @@ class News(models.Model):
     we_have = models.BooleanField(default=False, verbose_name='Є в наявності?', blank=True)
     rating = models.FloatField(null=True, verbose_name='Рейтинг', blank=True)
     categores = models.ManyToManyField(Category, blank=True)
+    tags = models.TextField(blank=True, verbose_name='Теги для пошуку')
 
     def __str__(self):
         return self.title
